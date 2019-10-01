@@ -26,5 +26,9 @@ module.exports = {
       template: "./public/index.html",
       filename: "./index.html"
     })
-  ]
+  ],
+  output: {
+		path: __dirname + "/build",
+		filename: "main.js"
+	}
 };
