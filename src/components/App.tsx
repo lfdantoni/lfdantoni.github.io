@@ -1,13 +1,11 @@
-import * as React from 'react'
+import React from 'react'
 
-export interface AppProps {
-    name: string
-}
-
-export default function App(props: AppProps) {
+const App = () => {
     return (
         <div>
-            App {props.name}
+            
         </div>
     )
 }
+
+export default App
