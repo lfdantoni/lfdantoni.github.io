@@ -1,0 +1,52 @@
+.container {
+    position: relative;
+    text-align: right;
+    margin: 0 25px;
+    border-bottom: 1px solid rgba(0,0,0,.1);
+
+    a {
+        font-size: 13px;
+        font-weight: 600;
+        padding: 10px 0;
+        position: relative;
+        display: inline-block;
+        text-decoration: none;
+        color: #333; 
+
+        &:before {
+            content: ' ';
+            position: absolute;
+            top: 4px;
+            left: -15px;
+            bottom: 4px;
+            right: -15px;
+            border-radius: 20px;
+            transform: scale(0);
+            transition: all .2s cubic-bezier(.175,.885,.32,1.275);
+            visibility: hidden;
+            opacity: 0;
+        }
+
+        &.active {
+            color: white;
+
+            &:before {
+                transform: scale(1);
+                visibility: visible;
+                opacity: 1;
+                background-color: #3aa8db;
+                // position: absolute;
+                // top: 4px;
+                // left: -15px;
+                // bottom: 4px;
+                // right: -15px;
+                // border-radius: 20px;
+            }
+        }
+
+        span {
+            position: relative;
+            z-index: 1;
+        }
+    }
+}

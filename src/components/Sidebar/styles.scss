@@ -1,7 +1,13 @@
-.test {
-    color: red;
+.container {
+    position: fixed;
+    width: 220px;
+    top: 15px;
+    left: 15px;
+    bottom: 15px;
+    background-color: white;
 
-    .fua-fua {
-        color: green;
+    .picture {
+        margin-bottom: 10px;
+        max-width: 100%;
     }
 }
