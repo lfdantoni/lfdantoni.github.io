@@ -15,7 +15,6 @@ jobs:
       # This step uses GitHub's hello-world-javascript-action: https://github.com/actions/hello-world-javascript-action
       - uses: actions/checkout@v1
       - uses: JamesIves/github-pages-deploy-action@master
-
       env:
         ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
         BASE_BRANCH: master # The branch the action should deploy from.
@@ -23,8 +22,8 @@ jobs:
         FOLDER: dist # The folder the action should deploy.
         BUILD_SCRIPT: npm install && npm run build # The build script the action should run prior to deploying.
 
-      # - run: npm install
       # - run: npm run build
+
       # This step prints an output (time) from the previous step's action.
-      - name: Echo Done
-        run: echo 'Done was ${{ steps.hello.outputs.time }}.'
+      - name: Echo the greeting's time
+        run: echo 'The time was ${{ steps.hello.outputs.time }}.'
