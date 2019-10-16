@@ -6,6 +6,7 @@ import styles from './styles.scss'
 const App = () => {
     return (
         <div className={styles.container}>
+            Test
             <Sidebar />
         </div>
     )
