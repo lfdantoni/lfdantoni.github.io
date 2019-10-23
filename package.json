@@ -26,6 +26,7 @@
     "@types/react-dom": "^16.9.1",
     "babel-loader": "^8.0.6",
     "clean-webpack-plugin": "^3.0.0",
+    "copy-webpack-plugin": "^5.0.4",
     "css-hot-loader": "^1.4.4",
     "css-loader": "^3.2.0",
     "file-loader": "^4.2.0",
@@ -44,8 +45,12 @@
   "dependencies": {
     "@material-ui/core": "^4.5.1",
     "@material-ui/icons": "^4.5.1",
+    "i18next": "^17.3.0",
+    "i18next-browser-languagedetector": "^4.0.0",
+    "i18next-xhr-backend": "^3.2.0",
     "react": "^16.10.1",
     "react-dom": "^16.10.1",
-    "react-hot-loader": "^4.12.15"
+    "react-hot-loader": "^4.12.15",
+    "react-i18next": "^10.13.1"
   }
 }

@@ -1,0 +1,10 @@
+{
+    "title": "Welcomes to react using react-i18next",
+    "sidebar": {
+      "profilePicture": "Profile Picture",
+      "menu": {
+        "start": "Start",
+        "resume": "Resume"
+      }
+    }
+  }

@@ -1,6 +1,7 @@
 const HtmlWebPackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const {CleanWebpackPlugin} = require('clean-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 const path = require('path');
 
 module.exports = function(env, argv) {
@@ -14,7 +15,10 @@ module.exports = function(env, argv) {
     new MiniCssExtractPlugin({
       filename: devMode ? '[name].css' : '[name].[hash].css',
       chunkFilename: devMode ? '[id].css' : '[id].[hash].css',
-    })
+    }),
+    new CopyPlugin([
+      { from: './public/locales/**/*.json', to: '[path]/[name].[ext]' }
+    ]),
   ];
 
   if (!devMode) {
@@ -27,7 +31,7 @@ module.exports = function(env, argv) {
     resolve: {
       extensions: ['.tsx', '.ts', '.js', '.scss'],
       alias: {
-        assets: path.resolve('./src/assets'), // Makes it easier to reference our assets in jsx files
+        assets: path.resolve('./public'), // Makes it easier to reference our assets in jsx files
       }
     },
     devServer: {
@@ -37,7 +41,7 @@ module.exports = function(env, argv) {
     module: {
       rules: [
         {
-          test: /\.(js|jsx|tsx)$/,
+          test: /\.(js|jsx|tsx|ts)$/,
           exclude: /node_modules/,
           use: [
             {
@@ -74,15 +78,15 @@ module.exports = function(env, argv) {
           ]
         },
         {
-          test: /\.(png|jpe?g|gif)$/i,
+          test: /\.(png|jpe?g|gif|json)$/i,
           loader: 'file-loader',
           options: {
             name(file) {
               if (devMode) {
-                return '[path][name].[ext]';
+                return '[path]/[name].[ext]';
               }
   
-              return '[name].[contenthash].[ext]';
+              return '[path]/[name].[contenthash].[ext]';
             }
           },
         }
