@@ -2,7 +2,7 @@ import React, {Suspense} from 'react'
 import {useTranslation} from 'react-i18next';
 import {hot} from 'react-hot-loader/root'
 import Sidebar from '../Sidebar'
-import styles from './styles.scss'
+import styles from './styles.module.scss'
 
 const Page = () => {
     const { t } = useTranslation();

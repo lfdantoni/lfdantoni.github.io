@@ -1,5 +1,5 @@
 import React from 'react'
-import styles from './styles.scss'
+import styles from './styles.module.scss'
 
 export interface LinkProp {
     link: string,
@@ -10,7 +10,7 @@ export interface LinkProp {
 const SLink = (props: LinkProp) => {
     return (
         <div className={styles.container}>
-           <a href={props.link} className={props.isActive ? styles.active : null}><span>{props.title}</span></a>
+           <a href={props.link} className={props.isActive ? styles.active : ''}><span>{props.title}</span></a>
         </div>
     )
 }
