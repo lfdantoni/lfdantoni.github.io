@@ -18,6 +18,7 @@ jobs:
       - name: build + deploy
         uses: JamesIves/github-pages-deploy-action@master
         env:
+          NODE_ENV: production
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           BASE_BRANCH: prod # The branch the action should deploy from.
           BRANCH: master # The branch the action should deploy to.
