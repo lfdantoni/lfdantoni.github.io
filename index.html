@@ -8,20 +8,17 @@
   <!-- Compiled and minified CSS -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 
-  <!-- Compiled and minified JavaScript -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-
   <!--Import Google Icon Font-->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   
-  <script src="index.js"></script>
+  <link href="styles.css" rel="stylesheet">
 </head>
 <body>
   <!-- menu -->
   <div class="navbar-fixed">
     <nav>
       <div class="nav-wrapper">
-        <a href="#!" class="brand-logo">Logo</a>
+        <a href="#!" class="brand-logo">Logo Test</a>
         <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
         <ul class="right hide-on-med-and-down">
           <li><a href="sass.html">Sass</a></li>
@@ -41,35 +38,42 @@
   </ul>
  <!-- menu -->
 
-
-  <div class="row">
-    <div class="col s12 m6">
-      <div class="card">
-        <div class="card-image">
-          <img src="images/sample-1.jpg">
-          <span class="card-title">Card Title</span>
-          <a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">add</i></a>
+  <div id="content"></div>
+  
+<!-- 
+  <ul class="row">
+    <li class="col s12">
+      <div class="row">
+        <div class="col s12 l1 product-icon">
+          <i class="material-icons circle">shopping_cart</i>
         </div>
-        <div class="card-content">
-          <p>I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively.</p>
+        <div class="input-field col s12 l3">
+          <select class="browser-default">
+            <option value="" disabled selected>Elegir un producto</option>
+            <option value="pan">Pan (Kg)</option>
+            <option value="harina">Harina (Kg)</option>
+            <option value="leche">Leche (Unidad)</option>
+          </select>
+        </div>
+        <div class="input-field col s12 l3">
+          <input type="text" placeholder="Nota" id="nota" class="validate" required>
+          <label for="nota">Nota</label>
+        </div>
+        <div class="input-field col s12 l3">
+          <input type="number" placeholder="Cantidad" id="cantidad" class="validate" required>
+          <label for="cantidad">Cantidad</label>
+        </div>
+        <div class="col s5 offset-s7 l2">
+          <div class="col s6"> <a class="btn-floating btn-large waves-effect waves-light red"> <i class="material-icons">remove</i> </a> </div>
+          <div class="col s6"> <a class="btn-floating btn-large waves-effect waves-light red"> <i class="material-icons">add</i> </a> </div>
         </div>
       </div>
-    </div>
+    </li>
+  </ul> -->
 
 
-    <div class="col s12 m6">
-      <div class="card">
-        <div class="card-image">
-          <img src="images/sample-1.jpg">
-          <span class="card-title">Card Title</span>
-          <a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">add</i></a>
-        </div>
-        <div class="card-content">
-          <p>I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively.</p>
-        </div>
-      </div>
-    </div> 
-
-  </div>
+  <!-- Compiled and minified JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <script src="index.js"></script>
 </body>
 </html>
