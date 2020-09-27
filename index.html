@@ -10,8 +10,8 @@
 
   <!--Import Google Icon Font-->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  
-  <link href="styles.css" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <!-- menu -->
@@ -38,42 +38,77 @@
   </ul>
  <!-- menu -->
 
-  <div id="content"></div>
-  
+ <!-- Products -->
+
+ <div id="content"></div>
+
 <!-- 
   <ul class="row">
-    <li class="col s12">
+    <li class="col s12 l12">
       <div class="row">
         <div class="col s12 l1 product-icon">
           <i class="material-icons circle">shopping_cart</i>
         </div>
         <div class="input-field col s12 l3">
           <select class="browser-default">
-            <option value="" disabled selected>Elegir un producto</option>
+            <option value="" disabled selected>Elegir opcion</option>
             <option value="pan">Pan (Kg)</option>
             <option value="harina">Harina (Kg)</option>
             <option value="leche">Leche (Unidad)</option>
           </select>
+          <label>Producto</label>
         </div>
         <div class="input-field col s12 l3">
-          <input type="text" placeholder="Nota" id="nota" class="validate" required>
+          <input placeholder="Nota" id="nota" type="text" class="validate" required>
           <label for="nota">Nota</label>
         </div>
         <div class="input-field col s12 l3">
-          <input type="number" placeholder="Cantidad" id="cantidad" class="validate" required>
+          <input placeholder="Cantidad" id="cantidad" type="number" class="validate" required>
           <label for="cantidad">Cantidad</label>
         </div>
-        <div class="col s5 offset-s7 l2">
-          <div class="col s6"> <a class="btn-floating btn-large waves-effect waves-light red"> <i class="material-icons">remove</i> </a> </div>
-          <div class="col s6"> <a class="btn-floating btn-large waves-effect waves-light red"> <i class="material-icons">add</i> </a> </div>
+        <div class="col s5 offset-s7 m3 offset-m9 l2">
+          <div class="col s6 l6"> <a class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">remove</i></a></div>
+          <div class="col s6 l6"> <a class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">add</i></a></div>
         </div>
+        
+      </div>
+    </li>
+
+
+    <li class="col s12 l12">
+      <div class="row">
+        <div class="col s12 l1 product-icon">
+          <i class="material-icons circle">shopping_cart</i>
+        </div>
+        <div class="input-field col s12 l3">
+          <select class="icons">
+            <option value="" disabled selected>Elegir opcion</option>
+            <option value="pan" data-icon="https://www.theflavorbender.com/wp-content/uploads/2019/02/Homemade-Bread-Featured-1.jpg">Pan (Kg)</option>
+            <option value="harina" data-icon="https://conceptodefinicion.de/wp-content/uploads/2020/05/harina.jpg">Harina (Kg)</option>
+            <option value="leche" data-icon="https://dam.cocinafacil.com.mx/wp-content/uploads/2019/06/Leche-descremada-3.jpg">Leche (Unidad)</option>
+          </select>
+          <label>Producto</label>
+        </div>
+        <div class="input-field col s12 l3">
+          <input placeholder="Nota" id="nota" type="text" class="validate" required>
+          <label for="nota">Nota</label>
+        </div>
+        <div class="input-field col s12 l3">
+          <input placeholder="Cantidad" id="cantidad" type="number" class="validate" required>
+          <label for="cantidad">Cantidad</label>
+        </div>
+        <div class="col s5 offset-s7 m3 offset-m9 l2">
+          <div class="col s6"> <a class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">remove</i></a></div>
+          <div class="col s6"> <a class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">add</i></a></div>
+        </div>
+        
       </div>
     </li>
   </ul> -->
 
-
   <!-- Compiled and minified JavaScript -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
   <script src="index.js"></script>
 </body>
 </html>
