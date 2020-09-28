@@ -90,9 +90,24 @@ const loadProducts = () => {
   addRow();
 }
 
+const registerSW = () => {
+  if('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/sw.js')
+        .then(() => {
+          console.log('ServiceWorker registered!')
+        })
+        .catch((err) => {
+          console.log('ServiceWorker register had an error ', err)
+        })
+    })
+  }
+}
 
 document.addEventListener('DOMContentLoaded', function() {
   loadProducts();
 
   runMaterialComponents();
+
+  registerSW();
 });
