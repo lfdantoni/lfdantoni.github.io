@@ -1,3 +1,5 @@
+// ProductsComponent
+
 const products = [
   {id: 'pan', description: 'Pan (Kg)'},
   {id: 'harina', description: 'Harina (Kg)'},
@@ -64,16 +66,14 @@ const removeRow = (event, itemId) => {
   element.parentNode.removeChild(element);
 }
 
-const addRow = () => {
-  const listNode = document.querySelector('#content ul');
-
+const addRow = (listNode) => {
   const item = getProductItemView();
 
   item.querySelector('a.remove')
   .addEventListener('click', (event) => removeRow(event, item.getAttribute('id')))
 
   item.querySelector('a.add')
-    .addEventListener('click', addRow)
+    .addEventListener('click', addRow.bind(this, listNode))
 
   listNode.appendChild(item);
 
@@ -84,12 +84,26 @@ const loadProducts = () => {
   const listNode = document.createElement('ul');
   listNode.classList.add('row');
 
-  const contentNode = document.querySelector('#content');
-  contentNode.appendChild(listNode);
+  addRow(listNode);
 
-  addRow();
+  return listNode;
 }
 
+const ProductsComponent = {
+  render: () => loadProducts()
+}
+
+// AboutComponent
+const AboutComponent = {
+  render: () => 'AboutComponent'
+}
+
+// ErrorComponent
+const ErrorComponent = {
+  render: () => '404 Page Not Found'
+}
+
+// Service Worker
 const registerSW = () => {
   if('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
@@ -104,10 +118,46 @@ const registerSW = () => {
   }
 }
 
+// routes
+const routes = [
+  { path: '/', component: ProductsComponent, },
+  { path: '/about', component: AboutComponent, },
+];
+
+const parseLocation = () => location.hash.slice(1).toLowerCase() || '/';
+
+const findComponentByPath = (path, routes) => routes.find(r => r.path.match(new RegExp(`^\\${path}$`, 'gm'))) || undefined;
+
+const router = () => {
+  // Find the component based on the current path
+  const path = parseLocation();
+  // If there's no matching route, get the "Error" component
+  const { component = ErrorComponent } = findComponentByPath(path, routes) || {};
+
+  const componentRender = component.render();
+
+  const content = document.getElementById('content');
+  content.innerHTML = '';
+  
+  if (typeof componentRender === 'string'){
+    content.innerHTML = componentRender;
+  } else {
+    content.appendChild(componentRender);
+  }
+
+  var elem = document.querySelector('.sidenav');
+  var instance = M.Sidenav.getInstance(elem);
+  instance.close();
+}
+
 document.addEventListener('DOMContentLoaded', function() {
   loadProducts();
 
   runMaterialComponents();
 
   registerSW();
+
+  // router
+  router();
+  window.addEventListener('hashchange', router);
 });
