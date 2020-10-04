@@ -11,9 +11,9 @@ const runMaterialComponents = () => {
   M.Sidenav.init(elems);
 }
 
-const getProductsView = () => {
+const getProductsView = (id) => {
   return `
-  <select class="browser-default">
+  <select class="browser-default" id="product-${id}">
     <option value="" disabled selected>Elegir opcion</option>
     ${products.map(p => (`
       <option value="${p.id}">${p.description}</option>
@@ -39,7 +39,7 @@ const getProductItemView = () => {
           <i class="material-icons circle">shopping_cart</i>
         </div>
         <div class="input-field col s12 l3">
-          ${getProductsView()}
+          ${getProductsView(id)}
         </div>
         <div class="input-field col s12 l3">
           <input placeholder="Nota" id="nota-${id}" type="text" class="validate" required>
@@ -80,13 +80,60 @@ const addRow = (listNode) => {
   M.FormSelect.init(item.querySelectorAll('select'));
 }
 
+const saveData = () => {
+  const rowNodes = document.querySelectorAll('#content ul li');
+  const listToSave = [];
+  
+  rowNodes.forEach(n => {
+    const id = n.id;
+    console.log(n.id);
+
+    const product = n.querySelector(`#product-${id}`).value;
+    const note = n.querySelector(`#nota-${id}`).value;
+    const quantity = n.querySelector(`#cantidad-${id}`).value;
+
+    if(product && note && quantity) {
+      listToSave.push({
+        id,
+        note,
+        quantity
+      })
+    }
+  })
+  
+  if(listToSave.length) {
+    localStorage.setItem('productList', JSON.stringify(listToSave));
+  } 
+}
+
+const getSaveButtonNode = () => {
+  const buttonWrapper = document.createElement('div');
+  buttonWrapper.classList.add('col', 's12', 'save-button');
+
+  const buttonNode = document.createElement('a');
+  buttonNode.classList.add('waves-effect', 'waves-light', 'btn');
+  buttonNode.innerText = 'Save';
+  buttonNode.addEventListener('click', saveData)
+
+  buttonWrapper.appendChild(buttonNode);
+
+  return buttonWrapper;
+}
+
 const loadProducts = () => {
   const listNode = document.createElement('ul');
   listNode.classList.add('row');
 
   addRow(listNode);
 
-  return listNode;
+  const wrapperNode = document.createElement('div');
+
+  const saveButtonNode = getSaveButtonNode();
+
+  wrapperNode.appendChild(saveButtonNode);
+  wrapperNode.appendChild(listNode);
+
+  return wrapperNode;
 }
 
 const ProductsComponent = {
