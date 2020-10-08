@@ -81,12 +81,12 @@ const addRow = (listNode) => {
 }
 
 const saveData = () => {
+  console.log('save data')
   const rowNodes = document.querySelectorAll('#content ul li');
   const listToSave = [];
   
   rowNodes.forEach(n => {
     const id = n.id;
-    console.log(n.id);
 
     const product = n.querySelector(`#product-${id}`).value;
     const note = n.querySelector(`#nota-${id}`).value;
@@ -101,9 +101,7 @@ const saveData = () => {
     }
   })
   
-  if(listToSave.length) {
-    localStorage.setItem('productList', JSON.stringify(listToSave));
-  } 
+  localStorage.setItem('productList', JSON.stringify(listToSave));
 }
 
 const getSaveButtonNode = () => {
