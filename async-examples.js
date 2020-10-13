@@ -305,6 +305,49 @@ console.log('%c ------------------ PATCH -----------------------', 'background-c
 //   .then(response => response.json())
 //   .then(json => console.log('Response PATCH fetch:', json))
 
+console.log('%c ------------------ JS Classes -------------------------------------', 'background-color: white; color: red; font-weight: bold;');
+
+// class Person {
+//   constructor(name, lastname) {
+//     this.name = name;
+//     this.lastname = lastname;
+//   }
+
+//   getPersonName() {
+//     return `${this.name} ${this.lastname}`;
+//   }
+// }
+
+// const person = new Person('Juan', 'Perez')
+// console.log(person)
+// console.log(person.getPersonName())
+
+// class Citizen extends Person {
+//   constructor(name, lastname, dni) {
+//     // calls parent (Person) constructor
+//     super(name, lastname)
+//     this.dni = dni;
+//   }
+
+//   // overrides parent method
+//   getPersonName() {
+//     return `${this.name} ${this.lastname} ${this.dni}`;
+//   }
+
+//   getCitizenData() {
+//     return `
+//       Name: ${this.name};
+//       Last Name: ${this.lastname};
+//       DNI: ${this.dni};
+//     `
+//   }
+// }
+
+const citizen = new Citizen('Juan', 'Perez', '33.444.111')
+console.log(citizen)
+console.log(citizen.getPersonName())
+console.log(citizen.getCitizenData())
+
 
 console.log('%c ------------------ AbortController -------------------------------------', 'background-color: white; color: red; font-weight: bold;');
 
