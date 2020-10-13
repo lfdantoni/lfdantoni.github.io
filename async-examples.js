@@ -343,10 +343,10 @@ console.log('%c ------------------ JS Classes ----------------------------------
 //   }
 // }
 
-const citizen = new Citizen('Juan', 'Perez', '33.444.111')
-console.log(citizen)
-console.log(citizen.getPersonName())
-console.log(citizen.getCitizenData())
+// const citizen = new Citizen('Juan', 'Perez', '33.444.111')
+// console.log(citizen)
+// console.log(citizen.getPersonName())
+// console.log(citizen.getCitizenData())
 
 
 console.log('%c ------------------ AbortController -------------------------------------', 'background-color: white; color: red; font-weight: bold;');
