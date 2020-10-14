@@ -11,12 +11,12 @@ const runMaterialComponents = () => {
   M.Sidenav.init(elems);
 }
 
-const getProductsView = (id) => {
+const getProductsView = (id, product) => {
   return `
   <select class="browser-default" id="product-${id}">
-    <option value="" disabled selected>Elegir opcion</option>
+    <option value="" disabled ${!product && 'selected'}>Elegir opcion</option>
     ${products.map(p => (`
-      <option value="${p.id}">${p.description}</option>
+      <option value="${p.id}" ${product===p.id && 'selected'}>${p.description}</option>
     `))
     .join('')}
   </select>
@@ -24,10 +24,16 @@ const getProductsView = (id) => {
   `
 }
 
-const getProductItemView = () => {
+const getProductItemView = (rowData = {}) => {
   const item = document.createElement('li')
 
-  const id =  new Date().getTime();
+  const newId =  new Date().getTime();
+
+  const {
+    id = newId,
+    product = null,
+    note = '',
+    quantity = ''} = rowData
 
   item.setAttribute('id', id);
 
@@ -39,14 +45,14 @@ const getProductItemView = () => {
           <i class="material-icons circle">shopping_cart</i>
         </div>
         <div class="input-field col s12 l3">
-          ${getProductsView(id)}
+          ${getProductsView(id, product)}
         </div>
         <div class="input-field col s12 l3">
-          <input placeholder="Nota" id="nota-${id}" type="text" class="validate" required>
+          <input placeholder="Nota" id="nota-${id}" type="text" class="validate" required value="${note}">
           <label for="nota-${id}">Nota</label>
         </div>
         <div class="input-field col s12 l3">
-          <input placeholder="Cantidad" id="cantidad-${id}" type="number" class="validate" required>
+          <input placeholder="Cantidad" id="cantidad-${id}" type="number" class="validate" required value="${quantity}">
           <label for="cantidad-${id}">Cantidad</label>
         </div>
         <div class="col s5 offset-s7 m3 offset-m9 l2">
@@ -66,8 +72,8 @@ const removeRow = (event, itemId) => {
   element.parentNode.removeChild(element);
 }
 
-const addRow = (listNode) => {
-  const item = getProductItemView();
+const addRow = (listNode, rowData) => {
+  const item = getProductItemView(rowData);
 
   item.querySelector('a.remove')
   .addEventListener('click', (event) => removeRow(event, item.getAttribute('id')))
@@ -95,6 +101,7 @@ const saveData = () => {
     if(product && note && quantity) {
       listToSave.push({
         id,
+        product,
         note,
         quantity
       })
@@ -122,7 +129,12 @@ const loadProducts = () => {
   const listNode = document.createElement('ul');
   listNode.classList.add('row');
 
-  addRow(listNode);
+  // load saved products
+  const dataSaved = localStorage.getItem('productList');
+  const rowsSaved = dataSaved ? JSON.parse(dataSaved) : [];
+  const rowsData = rowsSaved.length ? rowsSaved : [{}];
+  rowsData.forEach(rowData => addRow(listNode, rowData));
+  
 
   const wrapperNode = document.createElement('div');
 
@@ -189,6 +201,8 @@ const router = () => {
   } else {
     content.appendChild(componentRender);
   }
+
+  M.updateTextFields(); // for updating material component values
 
   var elem = document.querySelector('.sidenav');
   var instance = M.Sidenav.getInstance(elem);
