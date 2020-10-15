@@ -3,16 +3,57 @@ const runMaterialComponents = () => {
   M.Sidenav.init(elems);
 }
 
-// ProductsComponent
-const ProductsComponent = (() => {
+// API
+const API = (() => {
+  const baseUrl = 'https://book-store-server2020.herokuapp.com';
 
-  const products = [
-    {id: 'pan', description: 'Pan (Kg)'},
-    {id: 'harina', description: 'Harina (Kg)'},
-    {id: 'leche', description: 'Leche (Unidad)'}
-  ];
+  const getProductTypes = async () => {
+    return fetch(`${baseUrl}/products`)
+      .then(response => response.json());
+  }
+
+  const getUserData = async () => {
+    // Replaces with a correct userId
+    return fetch(`${baseUrl}/users/1`)
+      .then(response => response.json());
+  }
+
+  /**
+   * 
+   * @param {*} userData partial user props to update
+   */
+  const updateUserCartData = async (userCartData) => {
+    // Replaces with a correct userId
+    return fetch(`${baseUrl}/users/1`, {
+      method: 'PATCH',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        updatedAt: new Date().getTime(), // it should be in the server side
+        cart: userCartData
+      })
+    })
+      .then(response => response.json());
+  }
+
+  return {
+    getProductTypes,
+    getUserData,
+    updateUserCartData
+  }
+})()
+
+
+
+// ProductsComponent
+const ProductsComponent = ((API) => {
+
+  let products = [];
 
   let autoSaveInterval = null;
+
+  let forceStopAutoSave = true;
+
+  let reRender = () => {};
   
   const getProductsView = (id, product) => {
     return `
@@ -90,6 +131,7 @@ const ProductsComponent = (() => {
   }
   
   const saveData = () => {
+    if (forceStopAutoSave) return;
     console.log('save')
     const rowNodes = document.querySelectorAll('#content ul li');
     const listToSave = [];
@@ -108,18 +150,56 @@ const ProductsComponent = (() => {
         quantity
       })
     })
-    
-    localStorage.setItem('productList', JSON.stringify(listToSave));
-  }
+
+    const listToSaveStr =  JSON.stringify(listToSave);
+    const listSaved =  localStorage.getItem('productList');
+
+    // it could be improved
+    if(listToSaveStr !== listSaved) {
+      localStorage.setItem('productList', listToSaveStr);
+      localStorage.setItem('lastUpdate', new Date().getTime().toString());
+    }
   
+  }
+
+  const startAutoSave = () => {
+    forceStopAutoSave = false;
+    autoSaveInterval = setInterval(() => saveData(), 1000);
+  }
+
+  const stopAutoSave = () => {
+    forceStopAutoSave = true;
+    autoSaveInterval && clearInterval(autoSaveInterval);
+  }
+
+  const syncData = async () => {
+    stopAutoSave();
+    const userData = await API.getUserData();
+
+    const lastUpdate = parseInt(localStorage.getItem('lastUpdate'));
+
+    if (userData.updatedAt > lastUpdate) {
+      localStorage.setItem('productList', JSON.stringify(userData.cart));
+      localStorage.setItem('lastUpdate', userData.updatedAt.toString());
+    } else if (userData.updatedAt < lastUpdate) {
+      const sendData = JSON.parse(localStorage.getItem('productList'));
+      const savedData = await API.updateUserCartData(sendData);
+      localStorage.setItem('lastUpdate', savedData.updatedAt.toString());
+    }
+
+    if (userData.updatedAt !== lastUpdate) {
+      reRender();
+    }
+  }
+
   const getSaveButtonNode = () => {
     const buttonWrapper = document.createElement('div');
     buttonWrapper.classList.add('col', 's12', 'save-button');
   
     const buttonNode = document.createElement('a');
     buttonNode.classList.add('waves-effect', 'waves-light', 'btn');
-    buttonNode.innerText = 'Save';
-    // buttonNode.addEventListener('click', saveData)
+    buttonNode.innerText = 'Sync';
+    buttonNode.addEventListener('click', syncData)
   
     buttonWrapper.appendChild(buttonNode);
   
@@ -148,20 +228,32 @@ const ProductsComponent = (() => {
   }
   
   const willUnmountProductsComponent = () => {
-    clearInterval(autoSaveInterval)
+    stopAutoSave();
   }
 
-  const init = () => {
-    autoSaveInterval = setInterval(() => saveData(), 1000);
+  const loadProductTypes = async () => {
+    products = await API.getProductTypes();
+  }
+
+  const init = async (update) => {
+    reRender = update;
+    await loadProductTypes();
+
+    startAutoSave();
 
     return loadProducts();
   }
 
+  const load = async () => {
+    return syncData();
+  }
+
   return {
-    render: () => init(),
+    load,
+    render: (update) => init(update),
     willUnmount: () => willUnmountProductsComponent()
   }
-})()
+})(API) // module dependency
 
 
 // AboutComponent
@@ -206,7 +298,7 @@ const Router = (() => {
       window.addEventListener('hashchange', this.update);
     }
 
-    update = () => {
+    update = async () => {
       // call unmount method
       if (currentComponent) {
         currentComponent.willUnmount && currentComponent.willUnmount();
@@ -219,7 +311,11 @@ const Router = (() => {
 
       currentComponent = component;
 
-      const componentRender = currentComponent.render();
+      if(currentComponent.load) {
+        await currentComponent.load();
+      }
+
+      const componentRender = await currentComponent.render(this.update);
     
       const content = document.getElementById('content');
       content.innerHTML = '';
