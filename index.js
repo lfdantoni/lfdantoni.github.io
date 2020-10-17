@@ -1,8 +1,3 @@
-const runMaterialComponents = () => {
-  var elems = document.querySelectorAll('.sidenav');
-  M.Sidenav.init(elems);
-}
-
 // API
 const API = (() => {
   const baseUrl = 'https://book-store-server2020.herokuapp.com';
@@ -50,10 +45,6 @@ const ProductsComponent = ((API) => {
   let products = [];
 
   let autoSaveInterval = null;
-
-  let forceStopAutoSave = true;
-
-  let reRender = () => {};
   
   const getProductsView = (id, product) => {
     return `
@@ -131,7 +122,6 @@ const ProductsComponent = ((API) => {
   }
   
   const saveData = () => {
-    if (forceStopAutoSave) return;
     console.log('save')
     const rowNodes = document.querySelectorAll('#content ul li');
     const listToSave = [];
@@ -157,39 +147,37 @@ const ProductsComponent = ((API) => {
     // it could be improved
     if(listToSaveStr !== listSaved) {
       localStorage.setItem('productList', listToSaveStr);
-      localStorage.setItem('lastUpdate', new Date().getTime().toString());
     }
   
   }
 
   const startAutoSave = () => {
-    forceStopAutoSave = false;
-    autoSaveInterval = setInterval(() => saveData(), 1000);
+    autoSaveInterval = setInterval(() => saveData(), 2000);
   }
 
   const stopAutoSave = () => {
-    forceStopAutoSave = true;
     autoSaveInterval && clearInterval(autoSaveInterval);
   }
 
   const syncData = async () => {
     stopAutoSave();
+
+    const sendData = JSON.parse(localStorage.getItem('productList'));
+
+    try {
+      await API.updateUserCartData(sendData);
+    } catch (error) {
+      // we need to show an error here
+      alert('There was an error. Check your Network and try again.')
+    }
+
+    startAutoSave();
+  }
+
+  const loadData = async () => {
     const userData = await API.getUserData();
 
-    const lastUpdate = parseInt(localStorage.getItem('lastUpdate'));
-
-    if (userData.updatedAt > lastUpdate) {
-      localStorage.setItem('productList', JSON.stringify(userData.cart));
-      localStorage.setItem('lastUpdate', userData.updatedAt.toString());
-    } else if (userData.updatedAt < lastUpdate) {
-      const sendData = JSON.parse(localStorage.getItem('productList'));
-      const savedData = await API.updateUserCartData(sendData);
-      localStorage.setItem('lastUpdate', savedData.updatedAt.toString());
-    }
-
-    if (userData.updatedAt !== lastUpdate) {
-      reRender();
-    }
+    localStorage.setItem('productList', JSON.stringify(userData.cart));
   }
 
   const getSaveButtonNode = () => {
@@ -235,8 +223,7 @@ const ProductsComponent = ((API) => {
     products = await API.getProductTypes();
   }
 
-  const init = async (update) => {
-    reRender = update;
+  const render = async () => {
     await loadProductTypes();
 
     startAutoSave();
@@ -244,30 +231,31 @@ const ProductsComponent = ((API) => {
     return loadProducts();
   }
 
-  const load = async () => {
-    return syncData();
-  }
-
   return {
-    load,
-    render: (update) => init(update),
-    willUnmount: () => willUnmountProductsComponent()
+    load: loadData,
+    render,
+    willUnmount: willUnmountProductsComponent
   }
 })(API) // module dependency
 
 
 // AboutComponent
-const AboutComponent = {
-  render: () => 'AboutComponent'
-}
+const AboutComponent = (() => {
+  return {
+    render: () => 'AboutComponent'
+  }
+})()
 
 // ErrorComponent
-const ErrorComponent = {
-  render: () => '404 Page Not Found'
-}
+const ErrorComponent = (() => {
+  return {
+    render: () => '404 Page Not Found'
+  }
+})()
+
 
 // Service Worker
-const registerSW = () => {
+const SWModule = (() => {
   if('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
       navigator.serviceWorker.register('/sw.js')
@@ -279,7 +267,7 @@ const registerSW = () => {
         })
     })
   }
-}
+})()
 
 // routes
 
@@ -315,7 +303,7 @@ const Router = (() => {
         await currentComponent.load();
       }
 
-      const componentRender = await currentComponent.render(this.update);
+      const componentRender = await currentComponent.render();
     
       const content = document.getElementById('content');
       content.innerHTML = '';
@@ -337,17 +325,18 @@ const Router = (() => {
   return Router;
 })()
 
+const runMaterialComponents = () => {
+  var elems = document.querySelectorAll('.sidenav');
+  M.Sidenav.init(elems);
+}
+
 const routes = [
   { path: '/', component: ProductsComponent, },
   { path: '/about', component: AboutComponent, },
 ];
 
 document.addEventListener('DOMContentLoaded', function() {
-  // loadProducts();
-
   runMaterialComponents();
-
-  registerSW();
 
   // router
   new Router(routes);
