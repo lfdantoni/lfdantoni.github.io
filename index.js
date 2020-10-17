@@ -161,20 +161,25 @@ const ProductsComponent = ((API) => {
 
   const syncData = async () => {
     stopAutoSave();
-
+    let success = true;
     const sendData = JSON.parse(localStorage.getItem('productList'));
 
     try {
       await API.updateUserCartData(sendData);
     } catch (error) {
       // we need to show an error here
+      success = false;
       alert('There was an error. Check your Network and try again.')
     }
 
+    localStorage.setItem('sync', success ? 'true' : 'false');
     startAutoSave();
   }
 
   const loadData = async () => {
+    // if I have a fail sync, I keep my current localStorage data
+    if(localStorage.getItem('sync') === 'false') return;
+
     const userData = await API.getUserData();
 
     localStorage.setItem('productList', JSON.stringify(userData.cart));
