@@ -147,16 +147,21 @@ const ProductsComponent = ((API) => {
     // it could be improved
     if(listToSaveStr !== listSaved) {
       localStorage.setItem('productList', listToSaveStr);
+      localStorage.setItem('sync', 'false');
     }
   
   }
 
   const startAutoSave = () => {
-    autoSaveInterval = setInterval(() => saveData(), 2000);
+    // Checks if there is no setInterval executing
+    if(!autoSaveInterval) {
+      autoSaveInterval = setInterval(() => saveData(), 2000);
+    }
   }
 
   const stopAutoSave = () => {
     autoSaveInterval && clearInterval(autoSaveInterval);
+    autoSaveInterval = null; // Clean autoSaveInterval variable
   }
 
   const syncData = async () => {
