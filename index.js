@@ -1,3 +1,38 @@
+const App = (() => {
+  const components = {};
+
+  return {
+    addComponent: (name, component) => {
+      components[name] = component;
+    },
+    getComponent: (name) => {
+      return components[name];
+    }
+  }
+})()
+
+const AsyncModule = (() => {
+  const loadComponent = async (filePath, componentName) => {
+    return new Promise(resolve => {
+      // Checks if the file is already loaded to skip
+      const exist = document.querySelector(`script[src="${filePath}"]`);
+      if(exist) return resolve(componentName);
+
+      var s = document.createElement('script');
+      s.setAttribute('src', filePath);
+      s.onload=() => {
+        resolve(componentName);
+      };
+
+      document.head.appendChild( s );
+    })
+  }
+
+  return {
+    loadComponent
+  } 
+})()
+
 // API
 const API = (() => {
   const baseUrl = 'https://book-store-server2020.herokuapp.com';
@@ -249,13 +284,6 @@ const ProductsComponent = ((API) => {
 })(API) // module dependency
 
 
-// AboutComponent
-const AboutComponent = (() => {
-  return {
-    render: () => 'AboutComponent'
-  }
-})()
-
 // ErrorComponent
 const ErrorComponent = (() => {
   return {
@@ -307,8 +335,13 @@ const Router = (() => {
       // If there's no matching route, get the "Error" component
       const { component = ErrorComponent } = findComponentByPath(path, privateRoutes) || {};
 
-      currentComponent = component;
-
+      if(typeof component === 'function') {
+        const componentName = await component();
+        currentComponent = App.getComponent(componentName);
+      } else {
+        currentComponent = component;
+      }
+     
       if(currentComponent.load) {
         await currentComponent.load();
       }
@@ -342,7 +375,7 @@ const runMaterialComponents = () => {
 
 const routes = [
   { path: '/', component: ProductsComponent, },
-  { path: '/about', component: AboutComponent, },
+  { path: '/about', component: () => AsyncModule.loadComponent('about-component.js', 'AboutComponent') },
 ];
 
 document.addEventListener('DOMContentLoaded', function() {
