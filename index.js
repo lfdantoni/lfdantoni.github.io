@@ -161,6 +161,7 @@ const runMaterialComponents = () => {
   M.Sidenav.init(elems);
 }
 
+// Miss a loading when a script is loading
 const routes = [
   { path: '/', component:  () => AsyncModule.load('products-component.js').then(() => App.getComponent('ProductsComponent')), },
   { path: '/about', component: () => AsyncModule.load('about-component.js').then(() => App.getComponent('AboutComponent')) },
