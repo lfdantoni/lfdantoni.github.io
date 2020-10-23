@@ -169,11 +169,11 @@ self.addEventListener('fetch', (event) => {
     caches.match(event.request).then(response => {
       fetch(event.request).then(resFetch => {
         caches.open(DYNAMIC_CACHE).then(cache => {
-          cache.put(event.request.clone(), resFetch.clone());
+          cache.put(event.request, resFetch);
         })
       })
 
-      return response;
+      return response.clone();
     })
   )
 
