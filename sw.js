@@ -1,6 +1,6 @@
-const IMMUTABLE_CACHE = 'immutable_cache_v2';
-const STATIC_CACHE = 'static_cache_v2';
-const DYNAMIC_CACHE = 'dynamic_cache_v2';
+const IMMUTABLE_CACHE = 'immutable_cache_v3';
+const STATIC_CACHE = 'static_cache_v3';
+const DYNAMIC_CACHE = 'dynamic_cache_v3';
 
 const IMMUTABLE_CACHE_FILES = [
   'https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css',
@@ -16,6 +16,7 @@ const STATIC_CACHE_FILES = [
   '/sw.js',
   '/manifest.json',
   './',
+  '/products-component.js',
   '/images/favicon.ico',
   '/images/icon96.png',
   '/images/icon144.png',
@@ -164,17 +165,17 @@ self.addEventListener('fetch', (event) => {
   // )
 
   // Cache then network (Stale while revalidate)
-  // event.respondWith(
-  //   caches.match(event.request).then(response => {
-  //     fetch(event.request).then(resFetch => {
-  //       caches.open(DYNAMIC_CACHE).then(cache => {
-  //         cache.put(event.request.clone(), resFetch.clone());
-  //       })
-  //     })
+  event.respondWith(
+    caches.match(event.request).then(response => {
+      fetch(event.request).then(resFetch => {
+        caches.open(DYNAMIC_CACHE).then(cache => {
+          cache.put(event.request.clone(), resFetch.clone());
+        })
+      })
 
-  //     return response;
-  //   })
-  // )
+      return response;
+    })
+  )
 
   // Cache falling back to Network (with save)
   // event.respondWith(
@@ -197,22 +198,22 @@ self.addEventListener('fetch', (event) => {
   //   })
   // )
 
-  // Network falling back to Cache (with save)
-  event.respondWith(
-    fetch(event.request)
-      .then(async response => {
-        // non-GET requests are not allowed to 
-        // checkNonDynamicRequest checks if the request is already saved in other caches
-        if(event.request.method === 'GET' && !await checkNonDynamicRequest(event.request)) {
-          caches.open(DYNAMIC_CACHE).then(cache => {        
-            cache.put(event.request.clone(), response)
-          })
-        }
+  // Network falling back to Cache (with save) - it does not pass lighthouse
+  // event.respondWith(
+  //   fetch(event.request)
+  //     .then(async response => {
+  //       // non-GET requests are not allowed to 
+  //       // checkNonDynamicRequest checks if the request is already saved in other caches
+  //       if(event.request.method === 'GET' && !await checkNonDynamicRequest(event.request)) {
+  //         caches.open(DYNAMIC_CACHE).then(cache => {        
+  //           cache.put(event.request.clone(), response)
+  //         })
+  //       }
 
-        return response.clone();
-      })
-      .catch(() => {
-        return caches.match(event.request)
-      })
-  )
+  //       return response.clone();
+  //     })
+  //     .catch(() => {
+  //       return caches.match(event.request)
+  //     })
+  // )
 })
