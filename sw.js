@@ -1,5 +1,5 @@
 const IMMUTABLE_CACHE = 'immutable_cache_v3';
-const STATIC_CACHE = 'static_cache_v3';
+const STATIC_CACHE = 'static_cache_v4';
 const DYNAMIC_CACHE = 'dynamic_cache_v3';
 
 const IMMUTABLE_CACHE_FILES = [
