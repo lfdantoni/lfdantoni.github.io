@@ -4,7 +4,7 @@ const App = (() => {
 
   const onBeforeInstallPromptEvent = (e) => {
     // Don't show the mini-infobar on mobile
-    e.preventDefault();
+    // e.preventDefault();
 
     beforeInstallEvent = e;
   }
