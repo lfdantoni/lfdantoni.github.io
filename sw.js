@@ -175,7 +175,7 @@ self.addEventListener('fetch', (event) => {
         }
       })
 
-      return response.clone();
+      return response;
     })
   )
 
