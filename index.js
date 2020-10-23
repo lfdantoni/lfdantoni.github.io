@@ -36,7 +36,7 @@ const App = (() => {
       // Listen for the appinstalled event, indicating App has been installed.
       window.addEventListener('appinstalled', onAppInstalled);
 
-      document.getElementById('install-btn').addEventListener('click', onInstall)
+      document.querySelectorAll('.install-btn').forEach(e => e.addEventListener('click', onInstall))
     })
   }
 
