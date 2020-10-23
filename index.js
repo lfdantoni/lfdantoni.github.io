@@ -1,5 +1,46 @@
 const App = (() => {
   const components = {};
+  let beforeInstallEvent = null;
+
+  const onBeforeInstallPromptEvent = (e) => {
+    // Don't show the mini-infobar on mobile
+    e.preventDefault();
+
+    beforeInstallEvent = e;
+  }
+
+  const onAppInstalled = (e) => {
+    beforeInstallEvent = null;
+  }
+
+  const onInstall = async () => {
+    if (!beforeInstallEvent) return;
+
+    // Show the browser install prompt
+    beforeInstallEvent.prompt();
+
+    // Wait for the user to accept or dismiss the install prompt
+    const { outcome } = await beforeInstallEvent.userChoice;
+
+    // If the prompt was dismissed
+    if (outcome === 'dismissed') {
+      console.log('Installed!')
+    }
+  }
+
+  const init = () => {
+    window.addEventListener('load', () => {
+      // Listen for beforeinstallprompt events, indicating App is installable.
+      window.addEventListener('beforeinstallprompt', onBeforeInstallPromptEvent);
+
+      // Listen for the appinstalled event, indicating App has been installed.
+      window.addEventListener('appinstalled', onAppInstalled);
+
+      document.getElementById('install-btn').addEventListener('click', onInstall)
+    })
+  }
+
+  init();
 
   return {
     addComponent: (name, component) => {
