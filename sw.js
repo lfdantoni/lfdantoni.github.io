@@ -165,40 +165,38 @@ self.addEventListener('fetch', (event) => {
   // )
 
   // Cache then network (Stale while revalidate)
-  event.respondWith(
-    caches.match(event.request).then(response => {
-      fetch(event.request).then(async resFetch => {
-        if(event.request.method === 'GET' && !await checkNonDynamicRequest(event.request)) {
-          caches.open(DYNAMIC_CACHE).then(cache => {        
-            cache.put(event.request, resFetch)
-          })
-        }
-      })
-
-      return response;
-    })
-  )
-
-  // Cache falling back to Network (with save)
   // event.respondWith(
   //   caches.match(event.request).then(response => {
-  //     if(response) {
-  //       return response;
-  //     } else {
-  //       return fetch(event.request).then(fetchResponse => {
-  //         // non-GET requests are not allowed to save
-  //         if(event.request.method === 'GET') {
-  //           caches.open(DYNAMIC_CACHE).then(cache => {
-  //             cache.put(event.request.clone(), fetchResponse)
-  //           })
-  //         }
-
-  //         // it could be blocked when fetchResponse is used on cache.put
-  //         return fetchResponse.clone();
+  //     fetch(event.request).then(resFetch => {
+  //       caches.open(DYNAMIC_CACHE).then(cache => {
+  //         cache.put(event.request.clone(), resFetch.clone());
   //       })
-  //     }
+  //     })
+
+  //     return response;
   //   })
   // )
+
+  // Cache falling back to Network (with save)
+  event.respondWith(
+    caches.match(event.request).then(response => {
+      if(response) {
+        return response;
+      } else {
+        return fetch(event.request).then(async fetchResponse => {
+          // non-GET requests are not allowed to save
+          if(event.request.method === 'GET' && !await checkNonDynamicRequest(event.request)) {
+            caches.open(DYNAMIC_CACHE).then(cache => {
+              cache.put(event.request.clone(), fetchResponse)
+            })
+          }
+
+          // it could be blocked when fetchResponse is used on cache.put
+          return fetchResponse.clone();
+        })
+      }
+    })
+  )
 
   // Network falling back to Cache (with save) - it does not pass lighthouse
   // event.respondWith(
