@@ -167,10 +167,12 @@ self.addEventListener('fetch', (event) => {
   // Cache then network (Stale while revalidate)
   event.respondWith(
     caches.match(event.request).then(response => {
-      fetch(event.request).then(resFetch => {
-        caches.open(DYNAMIC_CACHE).then(cache => {
-          cache.put(event.request, resFetch);
-        })
+      fetch(event.request).then(async resFetch => {
+        if(event.request.method === 'GET' && !await checkNonDynamicRequest(event.request)) {
+          caches.open(DYNAMIC_CACHE).then(cache => {        
+            cache.put(event.request, resFetch)
+          })
+        }
       })
 
       return response.clone();
