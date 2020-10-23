@@ -146,6 +146,7 @@ const ProductsComponent = ((API) => {
     const userData = await API.getUserData();
 
     localStorage.setItem('productList', JSON.stringify(userData.cart));
+    localStorage.setItem('sync', 'true');
   }
 
   const getSaveButtonNode = () => {
