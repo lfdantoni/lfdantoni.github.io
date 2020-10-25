@@ -5,7 +5,7 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 // it should be saved on data base
-let subscription = [];
+let subscriptions = [];
 
 // it must be on server environment variables
 const PUBLIC_KEY = 'BKkMmIDYejXIYo4jFeuiGj_NYzdpQeg-V5oy1bQGyIIFafl_ZksuorHX0VIKAJOEDetoAFhhg2GT1c0gt4ma3g8';
@@ -22,16 +22,24 @@ app.use(express.json());
 
 
 app.post('/api/subscribe', (req, resp) => {
-  subscription.push(req.body);
+  const newSubscription = req.body;
+  const newSubStr = JSON.stringify(newSubscription);
 
-  console.log(subscription);
+  const exist = subscriptions.find(sub => {
+    return JSON.stringify(sub) === newSubStr;
+  })
+
+  if(!exist) {
+    console.log('New subscription', newSubscription)
+    subscriptions.push(req.body);
+  }
 
   resp.status(201).send({message: 'Subscription added'})
 })
 
 // it should have a security mechanism
 app.post('/api/notification', (req, resp) => {
-  subscription.forEach(sub => {
+  subscriptions.forEach(sub => {
     webPush.sendNotification(sub, JSON.stringify({
       title: 'Test',
       options: {
