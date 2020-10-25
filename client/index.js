@@ -106,10 +106,19 @@ const API = (() => {
       .then(response => response.json());
   }
 
+  const sendSubscription = async (subscription) => {
+    return fetch('/api/subscribe', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(subscription)
+    })
+  }
+
   return {
     getProductTypes,
     getUserData,
-    updateUserCartData
+    updateUserCartData,
+    sendSubscription
   }
 })()
 
@@ -123,19 +132,53 @@ const ErrorComponent = (() => {
 
 
 // Service Worker
-const SWModule = (() => {
+const SWModule = ((API) => {
+  const PUBLIC_KEY = 'BKkMmIDYejXIYo4jFeuiGj_NYzdpQeg-V5oy1bQGyIIFafl_ZksuorHX0VIKAJOEDetoAFhhg2GT1c0gt4ma3g8';
+
+  // https://gist.github.com/Klerith/80abd742d726dd587f4bd5d6a0ab26b6
+  const urlBase64ToUint8Array = (base64String) => {
+    var padding = '='.repeat((4 - base64String.length % 4) % 4);
+    var base64 = (base64String + padding)
+        .replace(/\-/g, '+')
+        .replace(/_/g, '/');
+
+    var rawData = window.atob(base64);
+    var outputArray = new Uint8Array(rawData.length);
+
+    for (var i = 0; i < rawData.length; ++i) {
+        outputArray[i] = rawData.charCodeAt(i);
+    }
+    return outputArray;
+  }
+
   if('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
       navigator.serviceWorker.register('/sw.js')
-        .then(() => {
+        .then((reg) => {
           console.log('ServiceWorker registered!')
+
+          reg.pushManager.subscribe({
+            applicationServerKey: urlBase64ToUint8Array(PUBLIC_KEY),
+            userVisibleOnly: true
+          })
+          .then(async r => {
+            await API.sendSubscription(r)
+          })
         })
         .catch((err) => {
           console.log('ServiceWorker register had an error ', err)
         })
     })
   }
-})()
+
+  const sendNotification = () => {
+
+  }
+
+  return {
+    sendNotification
+  }
+})(API)
 
 // routes
 
