@@ -41,10 +41,11 @@ app.post('/api/subscribe', (req, resp) => {
 app.post('/api/notification', (req, resp) => {
   subscriptions.forEach(sub => {
     webPush.sendNotification(sub, JSON.stringify({
-      title: 'Test',
+      title: req.body.title || 'Test',
       options: {
-        body: req.body.message || 'default body',
+        body: 'default body',
         icon: 'images/icon512.png',
+        ...req.body.options,
       }
     }))
   })

@@ -269,5 +269,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
   // Send Notification
-  document.getElementById('push').addEventListener('click', () =>  SWModule.sendNotification())
+  document.getElementById('push')
+    .addEventListener('click', () =>  SWModule.sendNotification())
 });
