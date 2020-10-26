@@ -114,11 +114,20 @@ const API = (() => {
     })
   }
 
+  const sendNotification = async () => {
+    return fetch('/api/notification', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({})
+    })
+  }
+
   return {
     getProductTypes,
     getUserData,
     updateUserCartData,
-    sendSubscription
+    sendSubscription,
+    sendNotification
   }
 })()
 
@@ -171,8 +180,9 @@ const SWModule = ((API) => {
     })
   }
 
-  const sendNotification = () => {
-
+  const sendNotification = async () => {
+    console.log('sendNotification')
+    await API.sendNotification();
   }
 
   return {
@@ -256,4 +266,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // router
   new Router(routes);
+
+
+  // Send Notification
+  document.getElementById('push').addEventListener('click', () =>  SWModule.sendNotification())
 });

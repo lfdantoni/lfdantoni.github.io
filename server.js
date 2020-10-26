@@ -43,7 +43,7 @@ app.post('/api/notification', (req, resp) => {
     webPush.sendNotification(sub, JSON.stringify({
       title: 'Test',
       options: {
-        body: req.body.message,
+        body: req.body.message || 'default body',
         icon: 'images/icon512.png',
       }
     }))
