@@ -225,7 +225,7 @@ self.addEventListener('push', (event) => {
 
 self.addEventListener('notificationclose', (event) => {
   console.log(event.notification.data);
-  const examplePage = 'https://google.com';
+  const examplePage = '/#/about';
   const promiseChain = clients.openWindow(examplePage);
   event.waitUntil(promiseChain);
 })
