@@ -142,7 +142,7 @@ const ErrorComponent = (() => {
 
 // Service Worker
 const SWModule = ((API) => {
-  const PUBLIC_KEY = 'BKkMmIDYejXIYo4jFeuiGj_NYzdpQeg-V5oy1bQGyIIFafl_ZksuorHX0VIKAJOEDetoAFhhg2GT1c0gt4ma3g8';
+  const PUBLIC_KEY = 'BKh8bd6cQKlrngFGcewcosHe6CShnxQ8ppNx6QGQFSLToV1wZOaM31RbkoChHw7-b0sST7fhv9L1HqbNuAL1aPg';
 
   // https://gist.github.com/Klerith/80abd742d726dd587f4bd5d6a0ab26b6
   const urlBase64ToUint8Array = (base64String) => {

@@ -222,3 +222,10 @@ self.addEventListener('push', (event) => {
   const data = event.data.json(); 
   self.registration.showNotification(data.title, data.options)
 })
+
+self.addEventListener('notificationclose', (event) => {
+  console.log(event.notification.data);
+  const examplePage = 'https://google.com';
+  const promiseChain = clients.openWindow(examplePage);
+  event.waitUntil(promiseChain);
+})
