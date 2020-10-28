@@ -223,9 +223,22 @@ self.addEventListener('push', (event) => {
   self.registration.showNotification(data.title, data.options)
 })
 
-self.addEventListener('notificationclose', (event) => {
-  console.log(event.notification.data);
-  const examplePage = '/#/about';
+self.addEventListener('notificationclick', (event) => {
+  console.log(event.action);
+
+  let examplePage = '';
+
+  switch(event.action) {
+    case 'coffee-action':
+      examplePage = '/';
+      break;
+    case 'doughnut-action':
+      examplePage = '/#/about';
+      break;
+    default:
+      return;
+  }
+
   const promiseChain = clients.openWindow(examplePage);
   event.waitUntil(promiseChain);
 })

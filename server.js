@@ -65,16 +65,6 @@ app.post('/api/notification', (req, resp) => {
           action: 'doughnut-action',
           title: 'Doughnut',
           icon: 'https://raw.githubusercontent.com/gauntface/web-push-book/master/static/demos/notification-examples/images/action-2-128x128.png'
-        },
-        {
-          action: 'gramophone-action',
-          title: 'gramophone',
-          icon: 'https://raw.githubusercontent.com/gauntface/web-push-book/master/static/demos/notification-examples/images/action-3-128x128.png'
-        },
-        {
-          action: 'atom-action',
-          title: 'Atom',
-          icon: 'https://raw.githubusercontent.com/gauntface/web-push-book/master/static/demos/notification-examples/images/action-4-128x128.png'
         }
       ],
       ...req.body.options
