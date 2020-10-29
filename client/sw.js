@@ -226,6 +226,7 @@ self.addEventListener('push', (event) => {
 self.addEventListener('notificationclick', (event) => {
   event.notification.close();
   console.log(event.action);
+  console.log(event.notification.data);
 
   let examplePage = '';
 
