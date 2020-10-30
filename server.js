@@ -65,13 +65,11 @@ app.post('/api/notification', (req, resp) => {
           action: 'doughnut-action',
           title: 'Doughnut',
           icon: 'https://raw.githubusercontent.com/gauntface/web-push-book/master/static/demos/notification-examples/images/action-2-128x128.png',
-          data: {
-            link: '/#/about'
-          }
         }
       ],
       data: {
-        link: '/#/about'
+        ['coffee-action']: '/#/about',
+        ['doughnut-action']: '/'
       },
       ...req.body.options
     },

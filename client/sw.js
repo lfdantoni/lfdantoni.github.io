@@ -1,5 +1,5 @@
 const IMMUTABLE_CACHE = 'immutable_cache_v3';
-const STATIC_CACHE = 'static_cache_v6';
+const STATIC_CACHE = 'static_cache_v7';
 const DYNAMIC_CACHE = 'dynamic_cache_v3';
 
 const IMMUTABLE_CACHE_FILES = [
@@ -228,19 +228,22 @@ self.addEventListener('notificationclick', (event) => {
   console.log(event.action);
   console.log(event.notification.data);
 
-  let examplePage = '';
+  const action = event.action;
+  const links = event.notification.data;
 
-  switch(event.action) {
-    case 'coffee-action':
-      examplePage = '/';
-      break;
-    case 'doughnut-action':
-      examplePage = '/#/about';
-      break;
-    default:
-      return;
-  }
+  // let examplePage = '';
 
-  const promiseChain = clients.openWindow(examplePage);
+  // switch(event.action) {
+  //   case 'coffee-action':
+  //     examplePage = '/';
+  //     break;
+  //   case 'doughnut-action':
+  //     examplePage = '/#/about';
+  //     break;
+  //   default:
+  //     return;
+  // }
+
+  const promiseChain = clients.openWindow(links[action] || '/');
   event.waitUntil(promiseChain);
 })
