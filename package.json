@@ -19,7 +19,7 @@
   },
   "homepage": "https://github.com/lfdantoni/lfdantoni.github.io#readme",
   "dependencies": {
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "nodemon": "^2.0.6",
     "web-push": "^3.4.4"
   }
