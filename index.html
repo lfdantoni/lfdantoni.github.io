@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leonardo D'Antoni - Servicios de Desarrollo de Software</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/scrollreveal"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #111827; /* bg-gray-900 */
+            color: #d1d5db; /* text-gray-300 */
+        }
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .section-title-gradient {
+            background: -webkit-linear-gradient(45deg, #38bdf8, #818cf8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -30px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: #38bdf8; /* sky-500 */
+            border: 4px solid #1f2937; /* gray-800 */
+        }
+        .lang-switcher button.active {
+            color: #38bdf8; /* sky-400 */
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Header -->
+    <header class="fixed w-full top-0 z-50 transition-all duration-300" id="header">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold text-white">LD</a>
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="#about" class="text-gray-300 hover:text-sky-400 transition-colors" data-lang-es="Sobre Mí" data-lang-en="About Me">Sobre Mí</a>
+                <a href="#experience" class="text-gray-300 hover:text-sky-400 transition-colors" data-lang-es="Carrera" data-lang-en="Career">Carrera</a>
+                <a href="#projects" class="text-gray-300 hover:text-sky-400 transition-colors" data-lang-es="Proyectos" data-lang-en="Projects">Proyectos</a>
+                <a href="#policy" class="text-gray-300 hover:text-sky-400 transition-colors" data-lang-es="Política Comercial" data-lang-en="Business Policy">Política Comercial</a>
+                 <!-- Language Switcher -->
+                <div class="lang-switcher flex space-x-2 border-l border-gray-600 pl-6">
+                    <button onclick="switchLanguage('es')" class="text-gray-400 hover:text-white transition-colors active" id="lang-es">ES</button>
+                    <span class="text-gray-600">|</span>
+                    <button onclick="switchLanguage('en')" class="text-gray-400 hover:text-white transition-colors" id="lang-en">EN</button>
+                </div>
+            </div>
+            <a href="mailto:lfdantoni@gmail.com" class="hidden md:block bg-sky-500 hover:bg-sky-600 text-white font-bold py-2 px-4 rounded-lg transition-transform hover:scale-105" data-lang-es="Contactar" data-lang-en="Contact">
+                Contactar
+            </a>
+        </nav>
+    </header>
+
+    <main class="pt-24">
+        <!-- Hero Section -->
+        <section id="hero" class="container mx-auto px-6 py-24 md:py-32 text-center">
+            <div class="max-w-4xl mx-auto">
+                <h1 class="text-4xl md:text-6xl font-bold text-white leading-tight mb-4 animate-fade-in-up">
+                    Leonardo D'Antoni
+                </h1>
+                <p class="text-xl md:text-2xl mb-8 section-title-gradient font-semibold animate-fade-in-up" style="animation-delay: 0.2s;" data-lang-es="Servicios de Desarrollo de Software" data-lang-en="Software Development Services">
+                    Servicios de Desarrollo de Software
+                </p>
+                <p class="max-w-2xl mx-auto text-gray-400 mb-12 animate-fade-in-up" style="animation-delay: 0.4s;" data-lang-es="Ofrezco servicios profesionales de análisis y desarrollo de software. Apasionado por crear soluciones innovadoras y eficientes para impulsar proyectos y negocios." data-lang-en="I offer professional software analysis and development services. Passionate about creating innovative and efficient solutions to boost projects and businesses.">
+                    Ofrezco servicios profesionales de análisis y desarrollo de software. Apasionado por crear soluciones innovadoras y eficientes para impulsar proyectos y negocios.
+                </p>
+                <div class="flex justify-center space-x-4 animate-fade-in-up" style="animation-delay: 0.6s;">
+                    <a href="https://www.linkedin.com/in/leonardo-d-antoni-93aba422" target="_blank" class="bg-gray-700 hover:bg-gray-600 text-white font-bold py-3 px-6 rounded-lg transition-transform hover:scale-105">
+                        LinkedIn
+                    </a>
+                    <a href="#projects" class="bg-sky-500 hover:bg-sky-600 text-white font-bold py-3 px-6 rounded-lg transition-transform hover:scale-105" data-lang-es="Ver Proyectos" data-lang-en="View Projects">
+                        Ver Proyectos
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Me Section -->
+        <section id="about" class="py-20 md:py-32">
+            <div class="container mx-auto px-6">
+                <div class="grid grid-cols-1 md:grid-cols-5 gap-16 items-center">
+                    <div class="md:col-span-2 reveal-left">
+                        <img src="me.jpeg" style="width: 400px;" alt="Imagen de Leonardo D'Antoni" class="rounded-2xl shadow-2xl w-full h-full object-cover">
+                    </div>
+                    <div class="md:col-span-3 reveal-right">
+                        <h2 class="text-3xl md:text-4xl font-bold text-white mb-6" data-lang-es="Sobre Mí y Mis Servicios" data-lang-en="About Me & My Services">Sobre Mí y Mis Servicios</h2>
+                        <p class="text-gray-400 mb-4" data-lang-es="Soy un desarrollador de software con una sólida trayectoria ofreciendo servicios profesionales en tecnologías como .NET y JavaScript. Mi objetivo es transformar ideas en productos de software robustos y de alta calidad." data-lang-en="I am a software developer with a solid track record offering professional services in technologies like .NET and JavaScript. My goal is to transform ideas into robust, high-quality software products.">
+                            Soy un desarrollador de software con una sólida trayectoria ofreciendo servicios profesionales en tecnologías como .NET y JavaScript. Mi objetivo es transformar ideas en productos de software robustos y de alta calidad.
+                        </p>
+                        <p class="text-gray-400 mb-6" data-lang-es="Con experiencia en metodologías ágiles, garantizo una colaboración efectiva y una adaptación rápida a las necesidades de cada proyecto. Ofrezco servicios de consultoría, desarrollo a medida y automatización, incluyendo la implementación de bots como Automation Assistant." data-lang-en="With experience in agile methodologies, I ensure effective collaboration and rapid adaptation to the needs of each project. I offer consulting, custom development, and automation services, including the implementation of bots like Automation Assistant.">
+                           Con experiencia en metodologías ágiles, garantizo una colaboración efectiva y una adaptación rápida a las necesidades de cada proyecto. Ofrezco servicios de consultoría, desarrollo a medida y automatización, incluyendo la implementación de bots como Automation Assistant.
+                        </p>
+                        <div class="flex flex-wrap gap-3">
+                            <span class="bg-gray-700 text-sky-300 text-sm font-semibold px-3 py-1 rounded-full">.NET</span>
+                            <span class="bg-gray-700 text-sky-300 text-sm font-semibold px-3 py-1 rounded-full">JavaScript</span>
+                            <span class="bg-gray-700 text-sky-300 text-sm font-semibold px-3 py-1 rounded-full" data-lang-es="Bases de Datos" data-lang-en="Databases">Bases de Datos</span>
+                            <span class="bg-gray-700 text-sky-300 text-sm font-semibold px-3 py-1 rounded-full" data-lang-es="Metodologías Ágiles" data-lang-en="Agile Methodologies">Metodologías Ágiles</span>
+                            <span class="bg-gray-700 text-sky-300 text-sm font-semibold px-3 py-1 rounded-full" data-lang-es="Consultoría de Software" data-lang-en="Software Consulting">Consultoría de Software</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Experience Section -->
+        <section id="experience" class="py-20 md:py-32 bg-gray-800/50">
+            <div class="container mx-auto px-6">
+                <h2 class="text-3xl md:text-4xl font-bold text-white text-center mb-16" data-lang-es="Trayectoria Profesional" data-lang-en="Professional Career">Trayectoria Profesional</h2>
+                <div class="relative max-w-2xl mx-auto border-l-2 border-gray-700 pl-8">
+                    <!-- Timeline Items -->
+                    <div class="mb-12 reveal-timeline timeline-item"><h3 class="text-xl font-bold text-sky-400">Software Developer</h3><p class="text-gray-400 font-semibold mb-1">Securitize</p><p class="text-sm text-gray-500" data-lang-es="septiembre de 2022 - Presente" data-lang-en="September 2022 - Present">septiembre de 2022 - Presente</p></div>
+                    <div class="mb-12 reveal-timeline timeline-item"><h3 class="text-xl font-bold text-sky-400" data-lang-es="Docente" data-lang-en="Teacher">Docente</h3><p class="text-gray-400 font-semibold mb-1">EducacionIT</p><p class="text-sm text-gray-500" data-lang-es="marzo de 2019 - Presente" data-lang-en="March 2019 - Present">marzo de 2019 - Presente</p></div>
+                    <div class="mb-12 reveal-timeline timeline-item"><h3 class="text-xl font-bold text-sky-400">Full Stack Engineer</h3><p class="text-gray-400 font-semibold mb-1">MURAL</p><p class="text-sm text-gray-500" data-lang-es="agosto de 2020 - agosto de 2022" data-lang-en="August 2020 - August 2022">agosto de 2020 - agosto de 2022</p></div>
+                    <div class="mb-12 reveal-timeline timeline-item"><h3 class="text-xl font-bold text-sky-400">Technical Consultant / Analyst</h3><p class="text-gray-400 font-semibold mb-1">Solstice</p><p class="text-sm text-gray-500" data-lang-es="junio de 2017 - julio de 2020" data-lang-en="June 2017 - July 2020">junio de 2017 - julio de 2020</p></div>
+                    <div class="reveal-timeline timeline-item"><h3 class="text-xl font-bold text-sky-400" data-lang-es="Desarrollador de Software" data-lang-en="Software Developer">Desarrollador de Software</h3><p class="text-gray-400 font-semibold mb-1">Lagash Systems, ISBAN, Tenaris, Process Technologies</p><p class="text-sm text-gray-500" data-lang-es="octubre de 2010 - junio de 2017" data-lang-en="October 2010 - June 2017">octubre de 2010 - junio de 2017</p></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects" class="py-20 md:py-32">
+            <div class="container mx-auto px-6">
+                <h2 class="text-3xl md:text-4xl font-bold text-white text-center mb-16" data-lang-es="Proyectos y Servicios" data-lang-en="Projects & Services">Proyectos y Servicios</h2>
+                <div class="flex justify-center">
+                    <div class="max-w-md w-full glass-effect rounded-2xl p-8 transform hover:-translate-y-2 transition-transform duration-300 reveal-card">
+                        <div class="flex items-center mb-4">
+                            <div class="p-3 bg-sky-500/20 rounded-lg mr-4">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-sky-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M12 6V3m0 18v-3M5.636 5.636l-1.414-1.414m15.556 15.556l-1.414-1.414M18.364 5.636l-1.414 1.414m-11.314 11.314l-1.414 1.414" /></svg>
+                            </div>
+                            <h3 class="text-2xl font-bold text-white">Automation Assistant</h3>
+                        </div>
+                        <p class="text-gray-400" data-lang-es="Un servicio de bot de asistencia para la automatización de tareas, integrado con IA. Este bot puede ser implementado a través de WhatsApp para optimizar flujos de trabajo, responder consultas frecuentes y mejorar la eficiencia operativa de un negocio." data-lang-en="An AI-integrated bot assistance service for task automation. This bot can be implemented via WhatsApp to optimize workflows, answer frequent queries, and improve a business's operational efficiency.">
+                            Un servicio de bot de asistencia para la automatización de tareas, integrado con IA. Este bot puede ser implementado a través de WhatsApp para optimizar flujos de trabajo, responder consultas frecuentes y mejorar la eficiencia operativa de un negocio.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- WhatsApp Policy Section -->
+        <section id="policy" class="py-20 md:py-32 bg-gray-800/50">
+            <div class="container mx-auto px-6">
+                <div class="max-w-4xl mx-auto reveal-fade-in">
+                    <h2 class="text-3xl md:text-4xl font-bold text-white text-center mb-12" data-lang-es="Política Comercial y de Comunicación" data-lang-en="Business and Communication Policy">Política Comercial y de Comunicación</h2>
+                    <div class="space-y-8 text-gray-300 bg-gray-900/50 p-8 rounded-lg">
+                        <div>
+                            <h3 class="text-xl font-semibold text-sky-400 mb-2" data-lang-es="1. Naturaleza del Negocio y Contacto" data-lang-en="1. Nature of Business and Contact">1. Naturaleza del Negocio y Contacto</h3>
+                            <p class="text-gray-400" data-lang-es='Este sitio web representa los servicios profesionales de <strong class="text-white">Leonardo D\'Antoni</strong>, desarrollador de software freelance. Ofrezco servicios de consultoría y desarrollo de software a medida, incluyendo la creación de soluciones de automatización como "Automation Assistant". Para cualquier consulta, puede contactarme a través del correo electrónico: <a href="mailto:lfdantoni@gmail.com" class="text-sky-400 hover:underline">lfdantoni@gmail.com</a>.' data-lang-en='This website represents the professional services of <strong class="text-white">Leonardo D\'Antoni</strong>, a freelance software developer. I offer consulting and custom software development services, including the creation of automation solutions like "Automation Assistant". For any inquiries, you can contact me via email: <a href="mailto:lfdantoni@gmail.com" class="text-sky-400 hover:underline">lfdantoni@gmail.com</a>.'>Este sitio web representa los servicios profesionales de <strong class="text-white">Leonardo D'Antoni</strong>, desarrollador de software freelance. Ofrezco servicios de consultoría y desarrollo de software a medida, incluyendo la creación de soluciones de automatización como "Automation Assistant". Para cualquier consulta, puede contactarme a través del correo electrónico: <a href="mailto:lfdantoni@gmail.com" class="text-sky-400 hover:underline">lfdantoni@gmail.com</a>.</p>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-semibold text-sky-400 mb-2" data-lang-es="2. Uso de la Plataforma WhatsApp Business" data-lang-en="2. Use of the WhatsApp Business Platform">2. Uso de la Plataforma WhatsApp Business</h3>
+                            <p class="text-gray-400" data-lang-es="Utilizo WhatsApp Business para facilitar la comunicación con clientes y potenciales clientes. Los fines exclusivos de esta comunicación son:" data-lang-en="I use WhatsApp Business to facilitate communication with current and potential clients. The exclusive purposes of this communication are:">Utilizo WhatsApp Business para facilitar la comunicación con clientes y potenciales clientes. Los fines exclusivos de esta comunicación son:</p>
+                            <ul class="list-disc list-inside space-y-2 pl-4 mt-2 text-gray-400">
+                                <li data-lang-es="Responder a consultas sobre mis servicios." data-lang-en="Responding to inquiries about my services.">Responder a consultas sobre mis servicios.</li>
+                                <li data-lang-es="Proporcionar soporte técnico relacionado con los proyectos desarrollados." data-lang-en="Providing technical support related to developed projects.">Proporcionar soporte técnico relacionado con los proyectos desarrollados.</li>
+                                <li data-lang-es="Enviar notificaciones y actualizaciones importantes sobre el estado de un proyecto en curso." data-lang-en="Sending important notifications and updates on the status of an ongoing project.">Enviar notificaciones y actualizaciones importantes sobre el estado de un proyecto en curso.</li>
+                                <li data-lang-es="Coordinar reuniones y demostraciones de productos." data-lang-en="Coordinating meetings and product demonstrations.">Coordinar reuniones y demostraciones de productos.</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-semibold text-sky-400 mb-2" data-lang-es="3. Consentimiento (Opt-In) y Revocación (Opt-Out)" data-lang-en="3. Consent (Opt-In) and Revocation (Opt-Out)">3. Consentimiento (Opt-In) y Revocación (Opt-Out)</h3>
+                            <p class="text-gray-400" data-lang-es='Solo inicio conversaciones por WhatsApp si el usuario ha contactado primero o ha proporcionado explícitamente su número con el fin de ser contactado. El acto de iniciar una conversación conmigo se considera un consentimiento claro para recibir respuesta por este medio. Los usuarios pueden revocar este consentimiento en cualquier momento enviando la palabra "STOP" o simplemente solicitando el cese de las comunicaciones.' data-lang-en='I only initiate conversations via WhatsApp if the user has contacted me first or has explicitly provided their number for the purpose of being contacted. The act of initiating a conversation with me is considered clear consent to receive a response through this medium. Users can revoke this consent at any time by sending the word "STOP" or by simply requesting to cease communications.'>Solo inicio conversaciones por WhatsApp si el usuario ha contactado primero o ha proporcionado explícitamente su número con el fin de ser contactado. El acto de iniciar una conversación conmigo se considera un consentimiento claro para recibir respuesta por este medio. Los usuarios pueden revocar este consentimiento en cualquier momento enviando la palabra "STOP" o simplemente solicitando el cese de las comunicaciones.</p>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-semibold text-sky-400 mb-2" data-lang-es="4. Cumplimiento de la Política Comercial de WhatsApp" data-lang-en="4. Compliance with WhatsApp Business Policy">4. Cumplimiento de la Política Comercial de WhatsApp</h3>
+                            <p class="text-gray-400" data-lang-es='Me comprometo a cumplir íntegramente con la <a href="https://business.whatsapp.com/policy" target="_blank" class="text-sky-400 hover:underline">Política comercial de WhatsApp</a>. Declaro explícitamente que mis servicios no incluyen la venta ni promoción de ninguno de los productos o servicios prohibidos en dicha política, tales como tabaco, drogas, armas, animales, contenido para adultos, alcohol, suplementos inseguros, etc.' data-lang-en='I am committed to fully complying with the <a href="https://business.whatsapp.com/policy" target="_blank" class="text-sky-400 hover:underline">WhatsApp Business Policy</a>. I explicitly state that my services do not include the sale or promotion of any products or services prohibited by said policy, such as tobacco, drugs, weapons, animals, adult content, alcohol, unsafe supplements, etc.'>Me comprometo a cumplir íntegramente con la <a href="https://business.whatsapp.com/policy" target="_blank" class="text-sky-400 hover:underline">Política comercial de WhatsApp</a>. Declaro explícitamente que mis servicios no incluyen la venta ni promoción de ninguno de los productos o servicios prohibidos en dicha política, tales como tabaco, drogas, armas, animales, contenido para adultos, alcohol, suplementos inseguros, etc.</p>
+                        </div>
+                         <div>
+                            <h3 class="text-xl font-semibold text-sky-400 mb-2" data-lang-es="5. Protección de Datos" data-lang-en="5. Data Protection">5. Protección de Datos</h3>
+                            <p class="text-gray-400" data-lang-es="Toda la información y datos compartidos a través de WhatsApp se tratan con la máxima confidencialidad y no se comparten con terceros sin consentimiento explícito, de acuerdo con las leyes de protección de datos aplicables." data-lang-en="All information and data shared via WhatsApp are treated with the utmost confidentiality and are not shared with third parties without explicit consent, in accordance with applicable data protection laws.">Toda la información y datos compartidos a través de WhatsApp se tratan con la máxima confidencialidad y no se comparten con terceros sin consentimiento explícito, de acuerdo con las leyes de protección de datos aplicables.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 border-t border-gray-800">
+        <div class="container mx-auto px-6 py-8 text-center text-gray-500">
+            <p data-lang-es="&copy; 2025 Leonardo D'Antoni. Todos los derechos reservados." data-lang-en="&copy; 2025 Leonardo D'Antoni. All rights reserved.">&copy; 2025 Leonardo D'Antoni. Todos los derechos reservados.</p>
+            <p class="text-sm mt-2" data-lang-es='Contacto: <a href="mailto:lfdantoni@gmail.com" class="hover:text-sky-400">lfdantoni@gmail.com</a>' data-lang-en='Contact: <a href="mailto:lfdantoni@gmail.com" class="hover:text-sky-400">lfdantoni@gmail.com</a>'>Contacto: <a href="mailto:lfdantoni@gmail.com" class="hover:text-sky-400">lfdantoni@gmail.com</a></p>
+        </div>
+    </footer>
+
+    <script>
+        // Animaciones con ScrollReveal
+        const sr = ScrollReveal({
+            distance: '50px',
+            duration: 1500,
+            easing: 'cubic-bezier(0.5, 0, 0, 1)',
+            reset: false
+        });
+
+        sr.reveal('.animate-fade-in-up', { origin: 'bottom', interval: 100 });
+        sr.reveal('.reveal-left', { origin: 'left' });
+        sr.reveal('.reveal-right', { origin: 'right' });
+        sr.reveal('.reveal-timeline', { origin: 'bottom', interval: 200 });
+        sr.reveal('.reveal-card', { origin: 'bottom', interval: 200, scale: 0.9 });
+        sr.reveal('.reveal-fade-in', { origin: 'bottom', viewFactor: 0.3 });
+        
+        // Efecto de cabecera al hacer scroll
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('header');
+            if (window.scrollY > 50) {
+                header.classList.add('bg-gray-900/80', 'backdrop-blur-sm', 'shadow-lg');
+            } else {
+                header.classList.remove('bg-gray-900/80', 'backdrop-blur-sm', 'shadow-lg');
+            }
+        });
+
+        // Lógica para cambiar de idioma
+        function switchLanguage(lang) {
+            const elements = document.querySelectorAll('[data-lang-es]');
+            elements.forEach(el => {
+                el.innerHTML = el.getAttribute(`data-lang-${lang}`);
+            });
+
+            // Actualizar la clase activa en los botones
+            document.getElementById('lang-es').classList.toggle('active', lang === 'es');
+            document.getElementById('lang-en').classList.toggle('active', lang === 'en');
+
+            // Actualizar el atributo lang del HTML
+            document.documentElement.lang = lang;
+        }
+    </script>
+</body>
+</html>
